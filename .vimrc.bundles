@@ -91,7 +91,7 @@
     " In your .vimrc.before.local file
     " list only the plugin groups you will use
     if !exists('g:spf13_bundle_groups')
-        let g:spf13_bundle_groups=['general', 'writing', 'neocomplete', 'programming', 'php', 'ruby', 'python', 'javascript', 'html', 'misc',]
+        let g:spf13_bundle_groups=['general', 'writing', 'neocomplete', 'programming', 'python',]
     endif
 
     " To override all the included bundles, add the following to your
@@ -113,21 +113,21 @@
             Bundle 'terryma/vim-multiple-cursors'
             Bundle 'vim-scripts/sessionman.vim'
             Bundle 'matchit.zip'
-            if (has("python") || has("python3")) && exists('g:spf13_use_powerline') && !exists('g:spf13_use_old_powerline')
-                Bundle 'Lokaltog/powerline', {'rtp':'/powerline/bindings/vim'}
-            elseif exists('g:spf13_use_powerline') && exists('g:spf13_use_old_powerline')
-                Bundle 'Lokaltog/vim-powerline'
-            else
-                Bundle 'vim-airline/vim-airline'
-                Bundle 'vim-airline/vim-airline-themes'
-            endif
-            Bundle 'powerline/fonts'
-            Bundle 'bling/vim-bufferline'
+            " if (has("python") || has("python3")) && exists('g:spf13_use_powerline') && !exists('g:spf13_use_old_powerline')
+            "     Bundle 'Lokaltog/powerline', {'rtp':'/powerline/bindings/vim'}
+            " elseif exists('g:spf13_use_powerline') && exists('g:spf13_use_old_powerline')
+            "     Bundle 'Lokaltog/vim-powerline'
+            " else
+            "     Bundle 'vim-airline/vim-airline'
+            "     Bundle 'vim-airline/vim-airline-themes'
+            " endif
+            " Bundle 'powerline/fonts'
+            Bundle 'itchyny/lightline.vim'
+            Bundle 'taohexxx/lightline-buffer'
             Bundle 'easymotion/vim-easymotion'
             Bundle 'jistr/vim-nerdtree-tabs'
             Bundle 'flazz/vim-colorschemes'
             Bundle 'mbbill/undotree'
-            Bundle 'nathanaelkane/vim-indent-guides'
             if !exists('g:spf13_no_views')
                 Bundle 'vim-scripts/restore_view.vim'
             endif

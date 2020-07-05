@@ -100,13 +100,13 @@
     " endif
     filetype plugin indent on   " Automatically detect file types.
     syntax on                   " Syntax highlighting
-    set mouse=a                 " Automatically enable mouse usage
+    "set mouse=a                 " Automatically enable mouse usage
     set mousehide               " Hide the mouse cursor while typing
     scriptencoding utf-8
 
     if has('clipboard')
         if has('unnamedplus')  " When possible use + register for copy-paste
-            set clipboard=unnamed,unnamedplus
+            set clipboard=unnamed
         else         " On mac and Windows, use * register for copy-paste
             set clipboard=unnamed
         endif
@@ -646,6 +646,7 @@
             let g:ctrlp_custom_ignore = {
                 \ 'dir':  '\.git$\|\.hg$\|\.svn$',
                 \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
+            set wildignore+=*/gcc*-Debug/*,*/gcc*-Release/*,*/icc-Release/*,*/clang*/*
 
             if executable('ag')
                 let s:ctrlp_fallback = 'ag %s --nocolor -l -g ""'
@@ -662,13 +663,13 @@
             if exists("g:ctrlp_user_command")
                 unlet g:ctrlp_user_command
             endif
-            let g:ctrlp_user_command = {
-                \ 'types': {
-                    \ 1: ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others'],
-                    \ 2: ['.hg', 'hg --cwd %s locate -I .'],
-                \ },
-                \ 'fallback': s:ctrlp_fallback
-            \ }
+ "           let g:ctrlp_user_command = {
+ "               \ 'types': {
+ "                   \ 1: ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others'],
+ "                   \ 2: ['.hg', 'hg --cwd %s locate -I .'],
+ "               \ },
+ "               \ 'fallback': s:ctrlp_fallback
+ "           \ }
 
             if isdirectory(expand("~/.vim/bundle/ctrlp-funky/"))
                 " CtrlP extensions
@@ -688,7 +689,7 @@
 
     " Rainbow {
         if isdirectory(expand("~/.vim/bundle/rainbow/"))
-            let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
+            let g:rainbow_active = 0 "0 if you want to enable it later via :RainbowToggle
         endif
     "}
 
@@ -725,7 +726,7 @@
             autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
             autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
             autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-            autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+            "    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
             autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
             autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
             autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
@@ -808,21 +809,21 @@
                     " <s-CR>: close popup and save indent.
                     inoremap <expr><s-CR> pumvisible() ? neocomplete#smart_close_popup()."\<CR>" : "\<CR>"
 
-                    function! CleverCr()
-                        if pumvisible()
-                            if neosnippet#expandable()
-                                let exp = "\<Plug>(neosnippet_expand)"
-                                return exp . neocomplete#smart_close_popup()
-                            else
-                                return neocomplete#smart_close_popup()
-                            endif
-                        else
-                            return "\<CR>"
-                        endif
-                    endfunction
+                    " function! CleverCr()
+                    "     if pumvisible()
+                    "         if neosnippet#expandable()
+                    "             let exp = "\<Plug>(neosnippet_expand)"
+                    "             return exp . neocomplete#smart_close_popup()
+                    "         else
+                    "             return neocomplete#smart_close_popup()
+                    "         endif
+                    "     else
+                    "         return "\<CR>"
+                    "     endif
+                    " endfunction
 
                     " <CR> close popup and save indent or expand snippet
-                    imap <expr> <CR> CleverCr()
+                 "   imap <expr> <CR> CleverCr()
                     " <C-h>, <BS>: close popup and delete backword char.
                     inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
                     inoremap <expr><C-y> neocomplete#smart_close_popup()
@@ -844,11 +845,11 @@
                         return "\<Tab>"
                     else
                         " existing text matching
-                        if neosnippet#expandable_or_jumpable()
-                            return "\<Plug>(neosnippet_expand_or_jump)"
-                        else
-                            return neocomplete#start_manual_complete()
-                        endif
+                   "     if neosnippet#expandable_or_jumpable()
+                   "         return "\<Plug>(neosnippet_expand_or_jump)"
+                   "     else
+                   "         return neocomplete#start_manual_complete()
+                   "     endif
                     endif
                 endfunction
 
@@ -915,21 +916,21 @@
                     inoremap <expr><C-l> neocomplcache#complete_common_string()
                     "inoremap <expr><CR> neocomplcache#complete_common_string()
 
-                    function! CleverCr()
-                        if pumvisible()
-                            if neosnippet#expandable()
-                                let exp = "\<Plug>(neosnippet_expand)"
-                                return exp . neocomplcache#close_popup()
-                            else
-                                return neocomplcache#close_popup()
-                            endif
-                        else
-                            return "\<CR>"
-                        endif
-                    endfunction
+               "     function! CleverCr()
+               "         if pumvisible()
+               "             if neosnippet#expandable()
+               "                 let exp = "\<Plug>(neosnippet_expand)"
+               "                 return exp . neocomplcache#close_popup()
+               "             else
+               "                 return neocomplcache#close_popup()
+               "             endif
+               "         else
+               "             return "\<CR>"
+               "         endif
+               "     endfunction
 
                     " <CR> close popup and save indent or expand snippet
-                    imap <expr> <CR> CleverCr()
+               "     imap <expr> <CR> CleverCr()
 
                     " <CR>: close popup
                     " <s-CR>: close popup and save indent.
@@ -949,7 +950,7 @@
             autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
             autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
             autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-            autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+            "   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
             autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
             autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
             autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
@@ -973,7 +974,7 @@
             autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
             autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
             autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-            autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+         "   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
             autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
             autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
             autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
@@ -1249,3 +1250,134 @@
         endif
     endif
 " }
+
+    vnoremap <C-c> "*y"
+
+    " provide hjkl movements in Insert mode via the <Alt> modifier key
+    inoremap <A-h> <C-o>h
+    inoremap <A-j> <C-o>j
+    inoremap <A-k> <C-o>k
+    inoremap <A-l> <C-o>l
+
+    imap <C-c> <Esc>
+
+	function! ExpandCMacro()
+	  "get current info
+	  let l:macro_file_name = "__macroexpand__" . tabpagenr()
+	  let l:file_row = line(".")
+	  let l:file_name = expand("%")
+	  let l:file_window = winnr()
+	  "create mark
+	  execute "normal! Oint " . l:macro_file_name . ";"
+	  execute "w"
+	  "open tiny window ... check if we have already an open buffer for macro
+	  if bufwinnr( l:macro_file_name ) != -1
+		execute bufwinnr( l:macro_file_name) . "wincmd w"
+		setlocal modifiable
+		execute "normal! ggdG"
+	  else
+		execute "bot 10split " . l:macro_file_name
+		execute "setlocal filetype=cpp"
+		execute "setlocal buftype=nofile"
+		nnoremap <buffer> q :q!<CR>
+	  endif
+	  "read file with gcc
+	  silent! execute "r!gcc -E " . l:file_name
+	  "keep specific macro line
+	  execute "normal! ggV/int " . l:macro_file_name . ";$\<CR>d"
+	  execute "normal! jdG"
+	  "indent
+	  execute "%!indent -st -kr"
+	  execute "normal! gg=G"
+	  "resize window
+	  execute "normal! G"
+	  let l:macro_end_row = line(".")
+	  execute "resize " . l:macro_end_row
+	  execute "normal! gg"
+	  "no modifiable
+	  setlocal nomodifiable
+	  "return to origin place
+	  execute l:file_window . "wincmd w"
+	  execute l:file_row
+	  execute "normal!u"
+	  execute "w"
+	  "highlight origin line
+	  let @/ = getline('.')
+	endfunction
+
+	autocmd FileType cpp nnoremap <leader>m :call ExpandCMacro()<CR>
+
+set hidden  " allow buffer switching without saving
+set showtabline=2  " always show tabline
+
+" use lightline-buffer in lightline
+let g:lightline = {
+    \ 'colorscheme': 'seoul256',
+    \ 'tabline': {
+    \   'left': [ [ 'bufferinfo' ],
+    \             [ 'separator' ],
+    \             [ 'bufferbefore', 'buffercurrent', 'bufferafter' ], ],
+    \   'right': [ [ 'close' ], ],
+    \ },
+    \ 'component_expand': {
+    \   'buffercurrent': 'lightline#buffer#buffercurrent',
+    \   'bufferbefore': 'lightline#buffer#bufferbefore',
+    \   'bufferafter': 'lightline#buffer#bufferafter',
+    \ },
+    \ 'component_type': {
+    \   'buffercurrent': 'tabsel',
+    \   'bufferbefore': 'raw',
+    \   'bufferafter': 'raw',
+    \ },
+    \ 'component_function': {
+    \   'bufferinfo': 'lightline#buffer#bufferinfo',
+    \ },
+    \ 'component': {
+    \   'separator': '',
+    \ },
+    \ }
+
+	" remap arrow keys
+	nnoremap <Left> :bprev<CR>
+	nnoremap <Right> :bnext<CR>
+
+	" lightline-buffer ui settings
+	" replace these symbols with ascii characters if your environment does not support unicode
+	let g:lightline_buffer_logo = ' '
+	let g:lightline_buffer_readonly_icon = ''
+	let g:lightline_buffer_modified_icon = '✭'
+	let g:lightline_buffer_git_icon = ' '
+	let g:lightline_buffer_ellipsis_icon = '..'
+	let g:lightline_buffer_expand_left_icon = '◀ '
+	let g:lightline_buffer_expand_right_icon = ' ▶'
+	let g:lightline_buffer_active_buffer_left_icon = ''
+	let g:lightline_buffer_active_buffer_right_icon = ''
+	let g:lightline_buffer_separator_icon = '  '
+
+	" enable devicons, only support utf-8
+	" require <https://github.com/ryanoasis/vim-devicons>
+	let g:lightline_buffer_enable_devicons = 1
+
+	" lightline-buffer function settings
+	let g:lightline_buffer_show_bufnr = 1
+
+	" :help filename-modifiers
+	let g:lightline_buffer_fname_mod = ':t'
+
+	" hide buffer list
+	let g:lightline_buffer_excludes = ['vimfiler']
+
+	" max file name length
+	let g:lightline_buffer_maxflen = 30
+
+	" max file extension length
+	let g:lightline_buffer_maxfextlen = 3
+
+	" min file name length
+	let g:lightline_buffer_minflen = 16
+
+	" min file extension length
+	let g:lightline_buffer_minfextlen = 3
+
+	" reserve length for other component (e.g. info, close)
+	let g:lightline_buffer_reservelen = 20
